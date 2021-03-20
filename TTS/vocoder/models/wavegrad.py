@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from torch import nn
 from torch.nn.utils import weight_norm
-
+from tqdm import tqdm
 from ..layers.wavegrad import DBlock, FiLM, UBlock, Conv1d
 
 
@@ -90,7 +90,7 @@ class Wavegrad(nn.Module):
         else:
             y_n = torch.FloatTensor(y_n).unsqueeze(0).unsqueeze(0).to(x)
         sqrt_alpha_hat = self.noise_level.to(x)
-        for n in range(len(self.alpha) - 1, -1, -1):
+        for n in tqdm(list(range(len(self.alpha) - 1, -1, -1))):
             y_n = self.c1[n] * (y_n -
                         self.c2[n] * self.forward(y_n, x, sqrt_alpha_hat[n].repeat(x.shape[0])))
             if n > 0:

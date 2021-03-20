@@ -1,0 +1,11 @@
+export PYTHON_PATH=`pwd`
+
+sudo apt-get install festival espeak-ng mbrola
+python TTS/bin/compute_statistics.py --config_path=/home/malchul/work/projects/tts/TTS/TTS/tts/configs/config.json --out_path=/home/malchul/work/projects/tts/TTS/mozilla_tts/scale_stats.npy
+
+python TTS/bin/train_tacotron.py --config_path TTS/tts/configs/config.json
+python TTS/bin/train_vocoder_wavegrad.py --config_path /home/malchul/work/projects/tts/TTS/TTS/vocoder/configs/wavegrad_libritts.json
+
+python TTS/bin/synthesize.py --text "Влад Сорокин" --model_path /home/malchul/work/projects/tts/TTS/mozilla_tts/ruslan-ddc-February-20-2021_11+37PM-e9e0784/checkpoint_90000.pth.tar --config_path /home/malchul/work/projects/tts/TTS/mozilla_tts/ruslan-ddc-February-20-2021_11+37PM-e9e0784/config.json --out_path /home/malchul/work/projects/tts/TTS/
+
+python TTS/bin/synthesize.py --text "Хороший план Уолтер, просто ахуенный, надежный, блять, как швейцарские часы. просто ахуительный если я правильно понял" --model_path /home/malchul/work/projects/tts/TTS/mozilla_tts/ruslan-ddc-February-27-2021_07+50PM-e9e0784/checkpoint_130000.pth.tar --config_path /home/malchul/work/projects/tts/TTS/mozilla_tts/ruslan-ddc-February-20-2021_11+37PM-e9e0784/config.json --out_path /home/malchul/work/projects/tts/TTS/ --vocoder_path  /home/malchul/work/projects/tts/TTS/mozilla_tts/wavegrad-ruslan-March-02-2021_08+58PM-e9e0784/checkpoint_270000.pth.tar --vocoder_config_path /home/malchul/work/projects/tts/TTS/TTS/vocoder/configs/wavegrad_libritts.json --use_cuda True
